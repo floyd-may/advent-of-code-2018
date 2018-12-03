@@ -1,8 +1,5 @@
 module AdventOfCode2018.Day1
 
-open System
-open System.IO
-
 let rawInput =
     System.IO.File.ReadAllLines("day1.txt")
     |> Seq.ofArray
@@ -46,15 +43,11 @@ let part2 =
         Repeated = false;
     }
 
-    let debugResult =
+    let result =
         frequencies
         |> Seq.skip 1
         |> Seq.scan frequencyFolder start
-
-    let result =
-        debugResult
         |> Seq.skipWhile (fun res -> not res.Repeated)
         |> Seq.map (fun x -> x.Current)
 
-    printfn "Day 1 Part 2 Debug Result: %A" (debugResult |> Seq.take 4)
     printfn "Day 1 Part 2 Result: %i" (result |> Seq.head)
