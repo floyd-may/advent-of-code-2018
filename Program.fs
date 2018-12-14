@@ -2,20 +2,49 @@
 
 open System
 open System.IO
+open Xunit.Runners
+open System.Reflection
+open System.Threading
 
 open Day1;
 open Day2;
 open Day3;
+open Day4;
 
 [<EntryPoint>]
 let main argv =
-    Day1.part1 |> ignore
-    Day1.part2 |> ignore
+    let assembly = Assembly.GetExecutingAssembly()
+    let url = new Uri(assembly.CodeBase)
+    let path = Path.GetFullPath url.LocalPath
+    use runner = AssemblyRunner.WithoutAppDomain path
 
-    Day2.part1 |> ignore
-    Day2.part2 |> ignore
+    use evt = new ManualResetEvent false
 
-    Day3.part1 |> ignore
-    Day3.part2 |> ignore
+    let indent (str:string) = str.Replace("\n", "\n\t")
+
+    runner.OnExecutionComplete <- fun (_) -> evt.Set() |> ignore
+    runner.OnTestFailed <- fun failArgs ->
+        printfn
+            "Failed: %s.%s: %s"
+            failArgs.TypeName
+            failArgs.MethodName
+            (indent failArgs.ExceptionMessage)
+
+    printfn "Running tests..."
+    runner.Start()
+    printfn "Tests complete."
+
+    evt.WaitOne(100000) |> ignore
+
+    //Day1.part1 |> ignore
+    //Day1.part2 |> ignore
+
+    //Day2.part1 |> ignore
+    //Day2.part2 |> ignore
+
+    //Day3.part1 |> ignore
+    //Day3.part2 |> ignore
+
+    Day4.part1 |> ignore
 
     0 // return an integer exit code

@@ -1,6 +1,6 @@
 module AdventOfCode2018.Day3
 
-open System.Text.RegularExpressions
+open Common
 
 type Coord = int * int
 
@@ -28,11 +28,6 @@ let toCoords claim =
                 yield (x,y)
     }
 
-let regexMatches pattern input =
-    let m = Regex.Match(input, pattern)
-
-    List.tail [ for g in m.Groups -> g.Value ]
-
 let claimRegex = @"#([0-9]+) @ ([0-9]+),([0-9]+): ([0-9]+)x([0-9]+)"
 
 // form #123 @ 3,2: 5x4
@@ -49,6 +44,7 @@ let parseClaim str =
         Width = width;
         Height = height;
     }
+    | _ -> failwith "whoops"
 
 let claims =
     rawInput
