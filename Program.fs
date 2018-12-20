@@ -10,6 +10,7 @@ open Day1;
 open Day2;
 open Day3;
 open Day4;
+open Day5;
 
 [<EntryPoint>]
 let main argv =
@@ -45,6 +46,10 @@ let main argv =
     //Day3.part1 |> ignore
     //Day3.part2 |> ignore
 
-    Day4.part1 |> ignore
+    //Day4.part1 |> ignore
+    //Day4.part2 |> ignore
+
+    //Day5.part1 () |> ignore
+    //Day5.part2 () |> ignore
 
     0 // return an integer exit code

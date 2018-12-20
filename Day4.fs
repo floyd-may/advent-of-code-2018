@@ -103,4 +103,4 @@ let part2 =
     let guardId = fst entry
     let chosenMinute = entry |> snd |> fst
 
-    printfn "Day 4 part 1: %A" (guardId * chosenMinute)
+    printfn "Day 4 part 2: %A" (guardId * chosenMinute)
